@@ -114,7 +114,6 @@
 
 					for(let i=2; i<element.length; i++) {
 						const input = document.createElement('input');
-						input.setAttribute('type', 'number');
 						input.value = element[i];
 						input.addEventListener('change', (e) => {
 							shipData.svg[elementId][i] = e.target.value;
@@ -160,7 +159,6 @@
 
 					for(let i=2; i<4; i++) {
 						const input = document.createElement('input');
-						input.setAttribute('type', 'number');
 						input.value = element[i];
 						input.addEventListener('change', (e) => {
 							shipData.svg[elementId][i] = e.target.value;
