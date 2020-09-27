@@ -1,0 +1,19 @@
+{
+	"svg": [
+		["struct","poly",100,100,50,200,50,300,100,400,225,300,500,250,225,200],
+		["struct","poly",50,200,50,300,340,275,400,250,340,225],
+		["cannon","rect",200,225, 50, 50,"cannon_1"],
+		["shield","rect",130,225, 50, 50, "shield_1"],
+		["shield","rect",270,225, 50, 50, "shield_2"],
+		["sup_propulsion","rect", 60,225, 50, 50, "prop_1"],
+		["sub_propulsion","rect", 90,140, 50, 50, "prop_2"],
+		["sub_propulsion","rect", 90,310, 50, 50, "prop_3"]
+	],
+	"content": {
+		"cannon": ["railgun","laser","plasma"],
+		"sub_propulsion": ["ion","pplasma"],
+		"sup_propulsion": ["vsl","wd"],
+		"shield": ["none","magnetic","turret","singularity","projector"]
+	},
+	"partCount": 6
+}

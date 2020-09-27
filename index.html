@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Ship Editor</title>
+		<link rel="stylesheet" type="text/css" href="style.css">
+		<link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
+	</head>
+	<body>
+		<div id="items-list">
+			<fieldset>
+				<legend>Ship selection</legend>
+
+				<select id="ship-select">
+					<option value="-2" disabled selected>Choose ship</option>
+					<option value="-1">New ship</option>
+				</select>
+			</fieldset>
+
+			<fieldset>
+				<legend>Ship structure</legend>
+
+				<div id="ship-structure">
+
+				</div>
+			</fieldset>
+
+			<fieldset>
+				<legend>Ship components</legend>
+
+				<div id="ship-components">
+
+				</div>
+			</fieldset>
+		</div>
+		<div id="ship-preview">
+			<svg id="fleet-type-create-schematic" viewBox="0 0 800 450" preserveAspectRatio="none"></svg>
+			<div id="fleet-type-create-selects"></div>
+
+			<div id="fleet-type-create-stat">
+				<div id="fleet-type-create-stat-subspeed">SHIP_SUBSPEED : <span id="fleet-type-create-stat-subspeed-val"></span><br /></div>
+				<div id="fleet-type-create-stat-supspeed">SHIP_SUPSPEED : <span id="fleet-type-create-stat-supspeed-val"></span><br /></div>
+				<div id="fleet-type-create-stat-miss">SHIP_MISS_CHANCE : <span id="fleet-type-create-stat-miss-val"></span><br /></div>
+				<div id="fleet-type-create-stat-fcap">SHIP_FCAP : <span id="fleet-type-create-stat-fcap-val"></span><br /></div>
+				<div id="fleet-type-create-stat-fweight">SHIP_FWEIGHT : <span id="fleet-type-create-stat-fweight-val"></span><br /></div>
+				<div id="fleet-type-create-stat-note">FLEET_BUILD_NOTE : <span id="fleet-type-create-stat-note-val"></span><br /></div>
+			</div>
+		</div>
+
+		<script type="text/javascript" src="https://cdn.galactae.eu/game/js/calcConstants.js"></script>
+		<script type="text/javascript" src="https://cdn.galactae.eu/game/js/_shared/Units.js"></script>
+		<script type="text/javascript" src="https://cdn.galactae.eu/game/js/units.js"></script>
+		<script type="text/javascript" src="./fleetTranslate.js"></script>
+		<script type="text/javascript">
+			const remote = require('electron').remote;
+			let shipData = {};
+
+			/**
+			 * Mock data
+			 */
+			class research {
+				static isSearched() {
+					return true;
+				}
+			}
+
+			const userData = {};
+
+			/**
+			 * Do stuff
+			 */
+			function redrawShipData() {
+				console.log(shipData);
+
+				// List structure parts
+				const shipStructure = document.getElementById('ship-structure');
+				while(shipStructure.firstChild) {
+					shipStructure.removeChild(shipStructure.firstChild);
+				}
+
+				for(const element of shipData.svg) {
+					if(element[0] !== 'struct') {
+						continue;
+					}
+
+					const listDiv = document.createElement('div');
+
+					const shapeType = document.createElement('p');
+					shapeType.innerText = element[1];
+					listDiv.appendChild(shapeType);
+					// @TODO: change shape type
+
+					for(let i=2; i<element.length; i++) {
+						const input = document.createElement('input');
+						input.setAttribute('type', 'number');
+						input.value = element[i];
+						// @TODO: event
+
+						listDiv.appendChild(input);
+					}
+
+					// @TODO: fixed input count for rect
+					// @TODO: always having an empty input in the end of poly
+					// @TODO: delete shape
+
+					shipStructure.appendChild(listDiv);
+				}
+
+				// @TODO: add new shape
+
+				// List components
+				const shipComponents = document.getElementById('ship-components');
+				while(shipComponents.firstChild) {
+					shipComponents.removeChild(shipComponents.firstChild);
+				}
+
+				for(const element of shipData.svg) {
+					if(element[0] === 'struct') {
+						continue;
+					}
+
+					const listDiv = document.createElement('div');
+
+					const shapeType = document.createElement('p');
+					shapeType.innerText = element[6];
+					listDiv.appendChild(shapeType);
+					// @TODO: change part name
+					// @TODO: change component type
+
+					for(let i=2; i<4; i++) {
+						const input = document.createElement('input');
+						input.setAttribute('type', 'number');
+						input.value = element[i];
+						// @TODO: event
+
+						listDiv.appendChild(input);
+					}
+
+					// @TODO: delete component
+					// @TODO: componenent choices
+
+					shipComponents.appendChild(listDiv);
+				}
+
+				// @TODO: add new component
+
+				// Draw SVG
+				units.drawShipShape(shipData.svg, shipData.content);
+			}
+
+			window.addEventListener('load', () => {
+				const shipList = remote.getGlobal('getShipList')();
+				const shipSelect = document.getElementById('ship-select');
+				for(const ship of shipList) {
+					const option = document.createElement('option');
+					option.innerText = ship;
+
+					shipSelect.appendChild(option);
+				}
+
+				shipSelect.addEventListener('change', (e) => {
+					console.log(e.target.value);
+
+					if(e.target.value === '-1') {
+						shipData = {
+							svg: [],
+							content: {},
+						};
+						redrawShipData();
+					} else {
+						shipData = remote.getGlobal('getShipData')(e.target.value);
+						redrawShipData();
+					}
+				});
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,165 @@
+html, body {
+	width: 100vw;
+	height: 100vh;
+	padding: 0;
+	margin: 0;
+
+	background: #0b1012;
+	color: white;
+
+	font-family: 'Titillium Web';
+
+	overflow: hidden;
+}
+
+/**
+ * Scrollbar
+ */
+::-webkit-scrollbar {
+	width: 4px;
+	height: 4px;
+}
+::-webkit-scrollbar-button {
+	width: 0;
+	height: 0;
+}
+::-webkit-scrollbar-thumb {
+	background: #0EC6C6;
+	border: 0 none #000000;
+	border-radius: 50px;
+}
+::-webkit-scrollbar-thumb:hover {
+	background: #19ffff;
+}
+::-webkit-scrollbar-thumb:active {
+	background: #00ffff;
+}
+::-webkit-scrollbar-track {
+	background: #333333;
+	border: 0 none #000000;
+	border-radius: 50px;
+}
+::-webkit-scrollbar-track:hover {
+	background: #444444;
+}
+::-webkit-scrollbar-track:active {
+	background: #666666;
+}
+::-webkit-scrollbar-corner {
+	background: transparent;
+}
+
+/**
+ * UI
+ */
+#items-list, #ship-preview {
+	margin: 0.5em;
+
+	display: inline-block;
+
+	vertical-align: top;
+}
+
+fieldset, #fleet-type-create-schematic {
+	border: 1px solid #0ec6c6;
+}
+
+/**
+ * Items
+ */
+#items-list {
+	width: calc(100vw - 800px - 3em - 8px);
+	height: calc(100vh - 1em - 2px);
+	padding-right: 1em;
+
+	overflow-y: auto;
+}
+
+#ship-select {
+	width: 100%;
+}
+
+#ship-structure input {
+	width: 40px;
+}
+
+
+/**
+ * Preview
+ */
+#ship-preview {
+	width: 800px;
+	position: relative;
+}
+#fleet-type-create-stat {
+	position: absolute;
+	top: 0;
+	right: 0;
+	max-width: 300px;
+	padding: 1.5em 0.8em 0 0;
+	text-align: right;
+}
+
+/**
+ * Img
+ */
+#fleet-type-create-selects {
+	position: absolute;
+    left: -14px;
+    top: -14px;
+	width: 800px;
+	height: 450px;
+}
+#fleet-type-create-selects ul, .tooltip-content {
+	display: none !important;
+}
+.dropdown {
+	margin: 0;
+}
+.dropdown dt a {
+	display: block;
+	box-sizing: content-box;
+	border: 1px solid transparent;
+	width: 60px;
+	padding: 5px;
+}
+.part-selecting {
+	position: absolute;
+
+	/* Style */
+	background: transparent;
+	border: none;
+	color: white;
+
+	/* Disable arrow */
+	-webkit-appearance: none;
+	-moz-appearance: none;
+}
+
+/**
+ * SVG
+ */
+#fleet-type-create-schematic {
+	width: 800px;
+	height: 450px;
+}
+#fleet-type-create-schematic * {
+	fill: #0b1012;
+	stroke-width: 1;
+	/*fill-opacity: 0;*/
+}
+#fleet-type-create-schematic .struct {
+	stroke: #0EC6C6;
+}
+#fleet-type-create-schematic .cannon, #fleet-type-create-schematic .rocketLauncher, #fleet-type-create-schematic .explosive {
+	stroke: #ff8d1c;
+}
+#fleet-type-create-schematic .shield, #fleet-type-create-schematic .cloak, #fleet-type-create-schematic .scanner {
+	stroke: #4e4efd;
+}
+#fleet-type-create-schematic .sub_propulsion, #fleet-type-create-schematic .sup_propulsion {
+	stroke: #00ff00;
+}
+#fleet-type-create-schematic .hangar {
+	stroke: #ff2a2a;
+}
