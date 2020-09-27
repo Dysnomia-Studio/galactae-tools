@@ -85,6 +85,30 @@
 				parent.appendChild(deleteButton);
 			}
 
+			function updateComponentLabels() {
+				const componentTypes = {};
+
+				for(const componentId in shipData.svg) {
+					const component = shipData.svg[componentId];
+					if(component[0] === 'struct') { 
+						continue;
+					}
+
+					let type = component[0];
+					if(type.endsWith('propulsion')) {
+						type = 'prop';
+					}
+
+					if(!componentTypes[type]) {
+						componentTypes[type] = 1;
+					}
+
+					shipData.svg[componentId][6] = type + '_' + componentTypes[type];
+
+					componentTypes[type]++;
+				}
+			}
+
 			/**
 			 * Do stuff
 			 */
@@ -169,11 +193,9 @@
 					}
 
 					generateDeleteButton(listDiv, () => {
-						console.log(shipData.svg);
-						console.log(elementId);
-						console.log(element[6]);
 						shipData.svg.splice(elementId, 1);
 						delete shipData.content[element[6]];
+						updateComponentLabels();
 						redrawShipData();
 					});
 					// @TODO: componenent choices
@@ -198,8 +220,6 @@
 				}
 
 				shipSelect.addEventListener('change', (e) => {
-					console.log(e.target.value);
-
 					if(e.target.value === '-1') {
 						shipData = {
 							svg: [],
