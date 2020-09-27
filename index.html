@@ -34,6 +34,69 @@
 			</fieldset>
 
 			<fieldset>
+				<legend>Ship component type</legend>
+
+				<div id="ship-components-type-rocketLauncher">
+					<strong>Rocket Launchers:</strong><br/>
+					<label for="rocketLauncher-none">None</label><input type="checkbox" name="rocketLauncher-none" id="rocketLauncher-none">
+					<label for="rocketLauncher-explosive">Explosive</label><input type="checkbox" name="rocketLauncher-explosive" id="rocketLauncher-explosive">
+					<label for="rocketLauncher-nuke">Nuclear</label><input type="checkbox" name="rocketLauncher-nuke" id="rocketLauncher-nuke">
+					<label for="rocketLauncher-iem">IEM</label><input type="checkbox" name="rocketLauncher-iem" id="rocketLauncher-iem">
+					<label for="rocketLauncher-antimatter">Antimatter</label><input type="checkbox" name="rocketLauncher-antimatter" id="rocketLauncher-antimatter">
+				</div>
+
+				<hr />
+
+				<div id="ship-components-type-cannon">
+					<strong>Cannon:</strong><br/>
+					<label for="cannon-none">None</label><input type="checkbox" name="cannon-none" id="cannon-none">
+					<label for="cannon-railgun">Railgun</label><input type="checkbox" name="cannon-railgun" id="cannon-railgun">
+					<label for="cannon-laser">Laser</label><input type="checkbox" name="cannon-laser" id="cannon-laser">
+					<label for="cannon-plasma">Plasma</label><input type="checkbox" name="cannon-plasma" id="cannon-plasma">
+				</div>
+
+				<hr />
+
+				<div id="ship-components-type-shield">
+					<strong>Defenses:</strong><br/>
+					<label for="shield-none">None</label><input type="checkbox" name="shield-none" id="shield-none">
+					<label for="shield-magnetic">Magnetic</label><input type="checkbox" name="shield-magnetic" id="shield-magnetic">
+					<label for="shield-turret">Turret</label><input type="checkbox" name="shield-turret" id="shield-turret">
+					<label for="shield-singularity">Singularity</label><input type="checkbox" name="shield-singularity" id="shield-singularity">
+					<label for="shield-projector">Projector</label><input type="checkbox" name="shield-projector" id="shield-projector">
+				</div>
+
+				<hr />
+
+				<div id="ship-components-type-hangar">
+					<strong>Hangar:</strong><br/>
+					<label for="hangar-none">None</label><input type="checkbox" name="hangar-none" id="hangar-none">
+					<label for="hangar-hangarSimple">Simple</label><input type="checkbox" name="hangar-hangarSimple" id="hangar-hangarSimple">
+					<label for="hangar-hangarDouble">Double</label><input type="checkbox" name="hangar-hangarDouble" id="hangar-hangarDouble">
+				</div>
+
+				<hr />
+
+				<div id="ship-components-type-sub_propulsion">
+					<strong>Sub propulsion:</strong><br/>
+					<label for="sub_propulsion-none">None</label><input type="checkbox" name="sub_propulsion-none" id="sub_propulsion-none">
+					<label for="sub_propulsion-ion">Ion</label><input type="checkbox" name="sub_propulsion-ion" id="sub_propulsion-ion">
+					<label for="sub_propulsion-pplasma">Plasma</label><input type="checkbox" name="sub_propulsion-pplasma" id="sub_propulsion-pplasma">
+					<label for="sub_propulsion-vsolaire">Solar sail</label><input type="checkbox" name="sub_propulsion-vsolaire" id="sub_propulsion-vsolaire">
+				</div>
+
+				<hr />
+
+				<div id="ship-components-type-sup_propulsion">
+					<strong>Sup propulsion:</strong><br/>
+					<label for="sup_propulsion-none">None</label><input type="checkbox" name="sup_propulsion-none" id="sup_propulsion-none">
+					<label for="sup_propulsion-vsl">VSL</label><input type="checkbox" name="sup_propulsion-vsl" id="sup_propulsion-vsl">
+					<label for="sup_propulsion-wd">WD</label><input type="checkbox" name="sup_propulsion-wd" id="sup_propulsion-wd">
+					<label for="sup_propulsion-hyperespace">Hyperespace</label><input type="checkbox" name="sup_propulsion-hyperespace" id="sup_propulsion-hyperespace">
+				</div>
+			</fieldset>
+
+			<fieldset>
 				<legend>Validation</legend>
 
 				<input type="button" id="ship-save" value="Save Ship">
@@ -225,7 +288,18 @@
 
 				// @TODO: add new component
 
-				// @TODO: component types parts
+				/**
+				 * Component types
+				 */
+				for(const elt of document.querySelectorAll('input[type=checkbox]')) {
+					elt.checked = false;
+				}
+
+				for(const partType in shipData.content) {
+					for(const tech of shipData.content[partType]) {
+						document.getElementById(partType + '-' + tech).checked = true;
+					}
+				}
 
 				// Draw SVG
 				units.drawShipShape(shipData.svg, shipData.content);
@@ -261,6 +335,34 @@
 						remote.getGlobal('saveShipData')(selectedShip, shipData);
 					}
 				});
+
+				for(const elt of document.querySelectorAll('input[type=checkbox]')) {
+					elt.addEventListener('change', (e) => {
+						const parts = elt.id.split('-');
+						if(e.target.checked) {
+							if(!shipData.content[parts[0]]) {
+								shipData.content[parts[0]] = [];
+							}
+
+							if(!shipData.content[parts[0]].includes(parts[1])) {
+								shipData.content[parts[0]].push(parts[1]);
+							}
+						} else {
+							if(shipData.content[parts[0]]) {
+								shipData.content[parts[0]].splice(
+									shipData.content[parts[0]].indexOf(parts[1]),
+									1
+								);
+
+								if(shipData.content[parts[0]].length === 0) {
+									delete shipData.content[parts[0]];
+								}
+							}
+						}
+
+						redrawShipData();
+					});
+				}
 			});
 		</script>
 	</body>
