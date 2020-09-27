@@ -34,5 +34,6 @@ global.getShipData = (shipName) => {
 };
 
 global.saveShipData = (shipName, shipData) => {
+	shipData.partCount = shipData.svg.filter((elt) => elt[0] !== 'struct').length;
 	fs.writeFileSync(path.resolve(process.cwd(), './ships/' + shipName + '.json'), JSON.stringify(shipData));
 };
