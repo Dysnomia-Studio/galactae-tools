@@ -1,0 +1,21 @@
+{
+	"svg": [
+		["struct","path","M200",130,"Q",300,165,200,200,"L100",200,"L100",130,"L200",130],
+		["struct","path","M400",200,"Q",600,250,400,300,"L100",300,"Q",20,250,100,200,"L400",200],
+		["struct","path","M200",300,"Q",300,335,200,370,"L100",370,"L100",300,"L200",300],
+		["cannon","rect",410,225, 50, 50, "cannon_1"],
+		["rocketLauncher","rect"  ,325,225, 50, 50, "rocket_1"],
+		["shield","rect",200,225, 50, 50, "shield_1"],
+		["sup_propulsion","rect"  , 80,225, 50, 50, "prop_1"],
+		["sub_propulsion","rect"  ,120,140, 50, 50, "prop_2"],
+		["sub_propulsion","rect"  ,120,310, 50, 50, "prop_3"]
+	],
+	"content": {
+		"cannon": ["railgun","laser","plasma"],
+		"rocketLauncher": ["explosive","nuke","antimater"],
+		"sub_propulsion": ["ion","pplasma"],
+		"sup_propulsion": ["vsl","wd"],
+		"shield": ["none","magnetic","turret"]
+	},
+	"partCount": 6
+}

@@ -1,0 +1,14 @@
+{
+	"svg": [
+		["struct","poly",100,100,70,250,100,400,170,400,250,350,180,340,250,250,180,160,250,150,170,100],
+		["struct","poly",60,205,50,250,60,295,510,280,520,250,510,220],
+		["struct","poly",50,50,50,50,50,50,50,50],
+		["cannon","rect",455,225, 50, 50,"cannon_1"],
+		["sub_propulsion","rect",70,225, 50, 50,"prop_1"]
+	],
+	"content": {
+		"cannon": ["railgun","laser","plasma"],
+		"sub_propulsion": ["vsolaire","ion"]
+	},
+	"partCount": 2
+}

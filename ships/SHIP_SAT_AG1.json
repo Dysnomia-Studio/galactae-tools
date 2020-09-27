@@ -1,1 +1,22 @@
-{"svg":[["struct","rect",75,175,250,150],["struct","line",125,185,125,315],["struct","line",175,185,175,315],["struct","line",225,185,225,315],["struct","line",275,185,275,315],["struct","rect",325,125,150,250],["struct","rect",475,175,250,150],["struct","line",525,185,525,315],["struct","line",575,185,575,315],["struct","line",625,185,625,315],["struct","line",675,185,675,315],["cannon","rect",375,150,50,50,"cannon_1"],["shield","rect",375,300,50,50,"shield_1"]],"content":{"cannon":["railgun","laser","plasma"],"shield":["none","magnetic","projector"]},"partCount":2}
+{
+	"svg": [
+		["struct","rect", 75,175,250,150],
+		["struct","line",125,185,125,315],
+		["struct","line",175,185,175,315],
+		["struct","line",225,185,225,315],
+		["struct","line",275,185,275,315],
+		["struct","rect",325,125,150,250],
+		["struct","rect",475,175,250,150],
+		["struct","line",525,185,525,315],
+		["struct","line",575,185,575,315],
+		["struct","line",625,185,625,315],
+		["struct","line",675,185,675,315],
+		["cannon","rect",375,150, 50, 50, "cannon_1"],
+		["shield","rect",375,300, 50, 50, "shield_1"]
+	],
+	"content": {
+		"cannon": ["railgun","laser","plasma"],
+		"shield": ["none","magnetic","projector"]
+	},
+	"partCount": 2
+}

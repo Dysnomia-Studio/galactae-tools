@@ -1,0 +1,23 @@
+{
+	"svg": [
+		["struct","path","M400",200,"Q",500,250,400,300,"L50",300,"Q",0,250,50,200,"L400",200],
+		["struct","poly",60,200,60,130,220,130,240,200],
+		["struct","poly",60,200,60,90,130,90,150,200],
+		["struct","poly",60,300,60,370,220,370,240,300],
+		["struct","poly",60,300,60,410,130,410,150,300],
+		["hangar","rect", 70,110,50,50,"hangar_1"],
+		["hangar","rect",160,140,50,50,"hangar_2"],
+		["hangar","rect", 70,340,50,50,"hangar_3"],
+		["hangar","rect",160,310,50,50,"hangar_4"],
+		["shield","rect",250,225, 50, 50,"shield_1"],
+		["sub_propulsion","rect"  , 100,225, 50, 50,"prop_1"],
+		["sup_propulsion","rect"  , 40,225, 50, 50,"prop_2"]
+	],
+	"content": {
+		"hangar": ["none","hangarSimple","hangarDouble"],
+		"sub_propulsion": ["ion","pplasma"],
+		"sup_propulsion": ["vsl","wd","hyperespace"],
+		"shield": ["none","magnetic","turret"]
+	},
+	"partCount": 7
+}
