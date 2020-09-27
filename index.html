@@ -109,6 +109,20 @@
 				}
 			}
 
+			function createShipSelect(selectedType) {
+				const select = document.createElement('select');
+
+				for(const type of ['cannon', 'hangar', 'shield', 'sub_propulsion', 'sup_propulsion']) {
+					const option = document.createElement('option');
+					option.innerText = type;
+					option.selected = (type === selectedType);
+
+					select.appendChild(option);
+				}
+
+				return select;
+			}
+
 			/**
 			 * Do stuff
 			 */
@@ -134,7 +148,6 @@
 					shapeType.classList.add('form-label');
 					shapeType.innerText = element[1];
 					listDiv.appendChild(shapeType);
-					// @TODO: change shape type
 
 					for(let i=2; i<element.length; i++) {
 						const input = document.createElement('input');
@@ -178,8 +191,14 @@
 					shapeType.classList.add('form-label');
 					shapeType.innerText = element[6];
 					listDiv.appendChild(shapeType);
-					// @TODO: change part name
-					// @TODO: change component type
+
+					const componentSelect = createShipSelect(element[0]);
+					componentSelect.addEventListener('change', (e) => {
+						shipData.svg[elementId][0] = e.target.value;
+						updateComponentLabels();
+						redrawShipData();
+					});
+					listDiv.appendChild(componentSelect);
 
 					for(let i=2; i<4; i++) {
 						const input = document.createElement('input');
@@ -194,7 +213,6 @@
 
 					generateDeleteButton(listDiv, () => {
 						shipData.svg.splice(elementId, 1);
-						delete shipData.content[element[6]];
 						updateComponentLabels();
 						redrawShipData();
 					});
@@ -204,6 +222,8 @@
 				}
 
 				// @TODO: add new component
+
+				// @TODO: component types parts
 
 				// Draw SVG
 				units.drawShipShape(shipData.svg, shipData.content);

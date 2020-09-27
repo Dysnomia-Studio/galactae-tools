@@ -68,11 +68,12 @@ input, select {
 	border: 1px outset #0EC6C6;
 	background-color: #0b1012;
 	color: #EEEEEE;
+
+	margin-right: 5px;
 }
 
 input {
 	width: 40px;
-	margin-right: 5px;
 }
 
 .form-group {
