@@ -240,6 +240,40 @@
 						length = 5;
 					}
 
+					const upBtn = document.createElement('input');
+					upBtn.setAttribute('type', 'button');
+					upBtn.value = '^';
+					upBtn.setAttribute('disabled', elementId === 0);
+					if(elementId !== 0) {
+						upBtn.addEventListener('click', (e) => {
+							const id = parseInt(elementId, 10);
+
+							const tmp = shipData.svg[id];
+							shipData.svg[id] = shipData.svg[id - 1];
+							shipData.svg[id - 1] = tmp;
+
+							redrawShipData();
+						});
+					}
+					listDiv.appendChild(upBtn);
+
+					const downButton = document.createElement('input');
+					downButton.setAttribute('type', 'button');
+					downButton.value = 'v';
+					upBtn.setAttribute('disabled', elementId === shipData.svg.length - 1);
+					if(elementId !== shipData.svg.length - 1) {
+						downButton.addEventListener('click', (e) => {
+							const id = parseInt(elementId, 10);
+
+							const tmp = shipData.svg[id];
+							shipData.svg[id] = shipData.svg[id + 1];
+							shipData.svg[id + 1] = tmp;
+
+							redrawShipData();
+						});
+					}
+					listDiv.appendChild(downButton);
+
 					for(let i=2; i<length; i++) {
 						const input = document.createElement('input');
 						input.setAttribute('type', 'text');
@@ -260,8 +294,6 @@
 
 						listDiv.appendChild(input);
 					}
-
-					// @TODO: change order
 
 					generateDeleteButton(listDiv, () => {
 						shipData.svg.splice(elementId, 1);
