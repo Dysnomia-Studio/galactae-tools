@@ -66,6 +66,14 @@
 
 			const userData = {};
 
+			function generateDeleteButton(parent, onClick) {
+				const deleteButton = document.createElement('p');
+				deleteButton.innerText = 'X';
+				deleteButton.addEventListener('click', onClick);
+				deleteButton.classList.add('delete-button');
+				parent.appendChild(deleteButton);
+			}
+
 			/**
 			 * Do stuff
 			 */
@@ -78,12 +86,14 @@
 					shipStructure.removeChild(shipStructure.firstChild);
 				}
 
-				for(const element of shipData.svg) {
+				for(const elementId in shipData.svg) {
+					const element = shipData.svg[elementId];
 					if(element[0] !== 'struct') {
 						continue;
 					}
 
 					const listDiv = document.createElement('div');
+					listDiv.classList.add('form-group');
 
 					const shapeType = document.createElement('p');
 					shapeType.innerText = element[1];
@@ -100,8 +110,11 @@
 					}
 
 					// @TODO: fixed input count for rect
-					// @TODO: always having an empty input in the end of poly
-					// @TODO: delete shape
+					// @TODO: always having an empty input in the end of poly 
+					generateDeleteButton(listDiv, () => {
+						shipData.svg.splice(elementId, 1);
+						redrawShipData();
+					});
 
 					shipStructure.appendChild(listDiv);
 				}
@@ -114,12 +127,14 @@
 					shipComponents.removeChild(shipComponents.firstChild);
 				}
 
-				for(const element of shipData.svg) {
+				for(const elementId in shipData.svg) {
+					const element = shipData.svg[elementId];
 					if(element[0] === 'struct') {
 						continue;
 					}
 
 					const listDiv = document.createElement('div');
+					listDiv.classList.add('form-group');
 
 					const shapeType = document.createElement('p');
 					shapeType.innerText = element[6];
@@ -136,7 +151,14 @@
 						listDiv.appendChild(input);
 					}
 
-					// @TODO: delete component
+					generateDeleteButton(listDiv, () => {
+						console.log(shipData.svg);
+						console.log(elementId);
+						console.log(element[6]);
+						shipData.svg.splice(elementId, 1);
+						delete shipData.content[element[6]];
+						redrawShipData();
+					});
 					// @TODO: componenent choices
 
 					shipComponents.appendChild(listDiv);
@@ -168,7 +190,7 @@
 						};
 						redrawShipData();
 					} else {
-						shipData = remote.getGlobal('getShipData')(e.target.value);
+						shipData = JSON.parse(JSON.stringify(remote.getGlobal('getShipData')(e.target.value)));
 						redrawShipData();
 					}
 				});

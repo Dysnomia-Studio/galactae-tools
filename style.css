@@ -64,6 +64,23 @@ fieldset, #fleet-type-create-schematic {
 	border: 1px solid #0ec6c6;
 }
 
+input[type='number'] {
+	width: 40px;
+}
+
+.form-group {
+	position: relative;
+}
+.delete-button {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	cursor: pointer;
+}
+.delete-button:hover {
+	font-weight: bold;
+}
+
 /**
  * Items
  */
@@ -78,11 +95,6 @@ fieldset, #fleet-type-create-schematic {
 #ship-select {
 	width: 100%;
 }
-
-#ship-structure input {
-	width: 40px;
-}
-
 
 /**
  * Preview
