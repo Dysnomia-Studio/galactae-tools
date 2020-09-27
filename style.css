@@ -64,16 +64,27 @@ fieldset, #fleet-type-create-schematic {
 	border: 1px solid #0ec6c6;
 }
 
+input, select {
+	border: 1px outset #0EC6C6;
+	background-color: #0b1012;
+	color: #EEEEEE;
+}
+
 input[type='number'] {
 	width: 40px;
+	margin-right: 5px;
 }
 
 .form-group {
 	position: relative;
 }
+.form-label {
+	display: inline-block;
+	width: 80px;
+}
 .delete-button {
 	position: absolute;
-	top: 0px;
+	top: -0.5em;
 	right: 0px;
 	cursor: pointer;
 }

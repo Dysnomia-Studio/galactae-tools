@@ -32,6 +32,12 @@
 
 				</div>
 			</fieldset>
+
+			<fieldset>
+				<legend>Validation</legend>
+
+				<input type="button" id="ship-save" value="Save Ship">
+			</fieldset>
 		</div>
 		<div id="ship-preview">
 			<svg id="fleet-type-create-schematic" viewBox="0 0 800 450" preserveAspectRatio="none"></svg>
@@ -58,6 +64,7 @@
 		<script type="text/javascript">
 			const remote = require('electron').remote;
 			let shipData = {};
+			let selectedShip = '';
 
 			/**
 			 * Mock data
@@ -99,7 +106,8 @@
 					const listDiv = document.createElement('div');
 					listDiv.classList.add('form-group');
 
-					const shapeType = document.createElement('p');
+					const shapeType = document.createElement('span');
+					shapeType.classList.add('form-label');
 					shapeType.innerText = element[1];
 					listDiv.appendChild(shapeType);
 					// @TODO: change shape type
@@ -143,7 +151,8 @@
 					const listDiv = document.createElement('div');
 					listDiv.classList.add('form-group');
 
-					const shapeType = document.createElement('p');
+					const shapeType = document.createElement('span');
+					shapeType.classList.add('form-label');
 					shapeType.innerText = element[6];
 					listDiv.appendChild(shapeType);
 					// @TODO: change part name
@@ -198,10 +207,18 @@
 							svg: [],
 							content: {},
 						};
+						selectedShip = ''; // @TODO: input
 						redrawShipData();
 					} else {
+						selectedShip = e.target.value;
 						shipData = JSON.parse(JSON.stringify(remote.getGlobal('getShipData')(e.target.value)));
 						redrawShipData();
+					}
+				});
+
+				document.getElementById('ship-save').addEventListener('click', () => {
+					if(selectedShip !== '') {
+						remote.getGlobal('saveShipData')(selectedShip, shipData);
 					}
 				});
 			});

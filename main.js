@@ -32,3 +32,7 @@ global.getShipList = () => {
 global.getShipData = (shipName) => {
 	return JSON.parse(fs.readFileSync(path.resolve(process.cwd(), './ships/' + shipName + '.json'), 'utf8'));
 };
+
+global.saveShipData = (shipName, shipData) => {
+	fs.writeFileSync(path.resolve(process.cwd(), './ships/' + shipName + '.json'), JSON.stringify(shipData));
+};
