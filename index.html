@@ -23,6 +23,16 @@
 				<div id="ship-structure">
 
 				</div>
+
+				<hr />
+
+				<select id="ship-structure-add-select">
+					<option>rect</option>
+					<option>poly</option>
+					<option>path</option>
+					<option>circle</option>
+				</select>
+				<input type="button" name="ship-structure-add" id="ship-structure-add" value="Add shape">
 			</fieldset>
 
 			<fieldset>
@@ -31,6 +41,17 @@
 				<div id="ship-components">
 
 				</div>
+
+				<hr />
+
+				<select id="ship-components-add-select">
+					<option>cannon</option>
+					<option>hangar</option>
+					<option>shield</option>
+					<option>sub_propulsion</option>
+					<option>sup_propulsion</option>
+				</select>
+				<input type="button" name="ship-components-add" id="ship-components-add" value="Add component">
 			</fieldset>
 
 			<fieldset>
@@ -212,20 +233,36 @@
 					shapeType.innerText = element[1];
 					listDiv.appendChild(shapeType);
 
-					for(let i=2; i<element.length; i++) {
+					let length = element.length + 1;
+					if(element[1] === 'rect') {
+						length = 6;
+					} else if(element[1] === 'circle') {
+						length = 5;
+					}
+
+					for(let i=2; i<length; i++) {
 						const input = document.createElement('input');
 						input.setAttribute('type', 'text');
-						input.value = element[i];
+						input.value = element[i] || '';
 						input.addEventListener('change', (e) => {
-							shipData.svg[elementId][i] = e.target.value;
-							units.drawShipShape(shipData.svg, shipData.content);
+							if(typeof shipData.svg[elementId][i] === 'undefined') {
+								shipData.svg[elementId].push(e.target.value);
+							} else {
+								shipData.svg[elementId][i] = e.target.value;
+							}
+
+							if(e.target.value === '') {
+								shipData.svg[elementId].splice(i, 1);
+							}
+
+							redrawShipData();
 						});
 
 						listDiv.appendChild(input);
 					}
 
-					// @TODO: fixed input count for rect
-					// @TODO: always having an empty input in the end of poly 
+					// @TODO: change order
+
 					generateDeleteButton(listDiv, () => {
 						shipData.svg.splice(elementId, 1);
 						redrawShipData();
@@ -233,8 +270,6 @@
 
 					shipStructure.appendChild(listDiv);
 				}
-
-				// @TODO: add new shape
 
 				// List components
 				const shipComponents = document.getElementById('ship-components');
@@ -281,12 +316,9 @@
 						updateComponentLabels();
 						redrawShipData();
 					});
-					// @TODO: componenent choices
 
 					shipComponents.appendChild(listDiv);
 				}
-
-				// @TODO: add new component
 
 				/**
 				 * Component types
@@ -363,6 +395,32 @@
 						redrawShipData();
 					});
 				}
+
+				document.getElementById('ship-structure-add').addEventListener('click', (e) => {
+					shipData.svg.push([
+						'struct',
+						document.getElementById('ship-structure-add-select').value,
+						0,
+						0,
+						0,
+					]);
+
+					redrawShipData();
+				});
+
+				document.getElementById('ship-components-add').addEventListener('click', (e) => {
+					shipData.svg.push([
+						document.getElementById('ship-components-add-select').value,
+						'rect',
+						0,
+						0,
+						50,
+						50,
+					]);
+
+					updateComponentLabels();
+					redrawShipData();
+				});
 			});
 		</script>
 	</body>
