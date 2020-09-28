@@ -149,6 +149,8 @@
 			const remote = require('electron').remote;
 			let shipData = {};
 			let selectedShip = '';
+			let prevPos = [0,0];
+			let prevObject = -1;
 
 			/**
 			 * Mock data
@@ -361,12 +363,41 @@
 
 				for(const partType in shipData.content) {
 					for(const tech of shipData.content[partType]) {
+						if(document.getElementById(partType + '-' + tech) === null) {
+							console.error('WRONG COMPONENT TYPE: ' + partType + '-' + tech);
+							continue;
+						}
+
 						document.getElementById(partType + '-' + tech).checked = true;
 					}
 				}
 
 				// Draw SVG
 				units.drawShipShape(shipData.svg, shipData.content);
+
+				console.log(1);
+				for(const elt of document.querySelectorAll('#fleet-type-create-selects dl')) {
+					elt.addEventListener('mousemove', (e) => {
+						let id = elt.id.split('-')
+						id = id[id.length - 1];
+						id = parseInt(id, 10);
+
+						if(id === prevObject) {
+							if(e.buttons === 1) {
+								shipData.svg[id][2] -= (prevPos[0] - e.screenX);
+								shipData.svg[id][3] -= (prevPos[1] - e.screenY);
+
+								console.log(shipData.svg[id]);
+
+								redrawShipData();
+							}
+						} else {
+							prevObject = id;
+						}
+
+						prevPos = [e.screenX, e.screenY]
+					});
+				}
 			}
 
 			window.addEventListener('load', () => {
@@ -453,6 +484,8 @@
 					updateComponentLabels();
 					redrawShipData();
 				});
+
+				// @TODO: undo/redo
 			});
 		</script>
 	</body>
