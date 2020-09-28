@@ -1,0 +1,10 @@
+# NEVER ADD THIS FILES
+config.js
+keys/*
+node_modules/*
+*.bat
+.scannerwork/*
+reports/*
+config.doxygen
+.nyc_output/
+out/*
