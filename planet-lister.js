@@ -29,8 +29,8 @@ let joueurisable = true;
 
 // Functions
 function saveToDb(address, type, orbitSize, orbitDuration, galacticPos, callback) {
-	const newtype = parseInt(type);
-	if(Number.isNaN(parseInt(type))) {
+	const newtype = parseInt(type, 10);
+	if(Number.isNaN(parseInt(type, 10))) {
 		const starTypesList = {
 			yellowDwarf:	1000,
 			blueGiant:		1001,
@@ -49,7 +49,7 @@ function saveToDb(address, type, orbitSize, orbitDuration, galacticPos, callback
 		type = starTypesList[type];
 		if(Number.isNaN(type)) { console.err('Erreur sur l\'etoile ' + address); }
 	} else {
-		type = parseInt(type);
+		type = parseInt(type, 10);
 	}
 
 	const newPlanet = {

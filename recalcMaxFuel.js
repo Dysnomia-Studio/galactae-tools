@@ -47,7 +47,7 @@ db.connect(async function(success,general=false) {
 		let done = 0;
 		let todo = 0;
 
-		fleetList[fid].fuel = parseInt(fleetList[fid].fuel);
+		fleetList[fid].fuel = parseInt(fleetList[fid].fuel, 10);
 
 		console.log('Updating fleet ' + fleetList[fid].name);
 

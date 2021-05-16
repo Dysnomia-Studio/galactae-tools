@@ -91,7 +91,7 @@ function getStarList() {
 		const starCountRandom = Math.random();
 		for(const index in config['starsPerSys'][type]) {
 			if(starCountRandom <= config['starsPerSys'][type][index]) {
-				starCount = parseInt(index);
+				starCount = parseInt(index, 10);
 				break;
 			}
 		}
