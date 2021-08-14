@@ -4,6 +4,6 @@
   "author": "Elanis",
   "dependencies": {
     "cheerio": "^1.0.0-rc.10",
-    "pg": "^8.6.0"
+    "pg": "^8.7.1"
   }
 }
