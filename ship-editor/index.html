@@ -146,7 +146,7 @@
 		<script type="text/javascript" src="https://cdn.galactae.eu/game/js/units.js"></script>
 		<script type="text/javascript" src="./fleetTranslate.js"></script>
 		<script type="text/javascript">
-			const remote = require('electron').remote;
+			const ipcRenderer = require('electron').ipcRenderer;
 			let shipData = {};
 			let selectedShip = '';
 			let prevPos = [0,0];
@@ -400,8 +400,8 @@
 				}
 			}
 
-			window.addEventListener('load', () => {
-				const shipList = remote.getGlobal('getShipList')();
+			window.addEventListener('load', async() => {
+				const shipList = await ipcRenderer.invoke('getShipList');
 				const shipSelect = document.getElementById('ship-select');
 				for(const ship of shipList) {
 					const option = document.createElement('option');
@@ -410,7 +410,7 @@
 					shipSelect.appendChild(option);
 				}
 
-				shipSelect.addEventListener('change', (e) => {
+				shipSelect.addEventListener('change', async(e) => {
 					if(e.target.value === '-1') {
 						shipData = {
 							svg: [],
@@ -420,14 +420,14 @@
 						redrawShipData();
 					} else {
 						selectedShip = e.target.value;
-						shipData = JSON.parse(JSON.stringify(remote.getGlobal('getShipData')(e.target.value)));
+						shipData = JSON.parse(JSON.stringify(await ipcRenderer.invoke('getShipData', e.target.value )));
 						redrawShipData();
 					}
 				});
 
-				document.getElementById('ship-save').addEventListener('click', () => {
+				document.getElementById('ship-save').addEventListener('click', async() => {
 					if(selectedShip !== '') {
-						remote.getGlobal('saveShipData')(selectedShip, shipData);
+						await ipcRenderer.invoke('saveShipData', selectedShip, shipData);
 					}
 				});
 

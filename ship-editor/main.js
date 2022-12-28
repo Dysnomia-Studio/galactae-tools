@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 
 const fs = require('fs');
 const path = require('path');
@@ -10,6 +10,7 @@ function createWindow () {
 		height: 1080,
 		webPreferences: {
 			nodeIntegration: true,
+			contextIsolation: false,
 			enableRemoteModule: true
 		}
 	});
@@ -25,15 +26,16 @@ app.whenReady().then(createWindow);
 const shipFilesList = fs.readdirSync(path.resolve(process.cwd(), './ships/'))
 	.filter((elt) => elt.endsWith('.json'));
 
-global.getShipList = () => {
+ipcMain.handle('getShipList', () => {
 	return shipFilesList.map((elt) => elt.substring(0, elt.length-5));
-};
+});
 
-global.getShipData = (shipName) => {
+ipcMain.handle('getShipData', (_, shipName) => {
+	console.log(shipName);
 	return JSON.parse(fs.readFileSync(path.resolve(process.cwd(), './ships/' + shipName + '.json'), 'utf8'));
-};
+});
 
-global.saveShipData = (shipName, shipData) => {
+ipcMain.handle('saveShipData', (_, shipName, shipData) => {
 	shipData.partCount = shipData.svg.filter((elt) => elt[0] !== 'struct').length;
 	fs.writeFileSync(path.resolve(process.cwd(), './ships/' + shipName + '.json'), JSON.stringify(shipData));
-};
+});
